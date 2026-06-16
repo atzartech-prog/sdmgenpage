@@ -189,7 +189,43 @@ const database = {
                 { nr: 4, title: "Penyerahan Dokumen", desc: "Informasi dikirim via email terenkripsi atau diserahkan dalam bentuk cetak resmi.", pic: "Petugas Pelayanan Publik", duration: "1 Hari Kerja" }
             ]
         }
-    ]
+    ],
+    artikel: {
+        title: "Peningkatan Kinerja Melalui Inovasi Pelayanan Publik Berbasis Digital",
+        author: "Tim Riset Humas & Publikasi",
+        date: "16 Juni 2026",
+        category: "Teknologi & Informasi",
+        content1: "Di era digitalisasi saat ini, peningkatan kinerja unit kerja mutlak memerlukan adopsi teknologi yang tepat guna. Transformasi pelayanan publik tidak hanya merestrukturisasi alur birokrasi dari tatap muka langsung menjadi serba online, melainkan juga mengubah paradigma para aparatur pelaksana pelayanan agar bertindak lebih responsif, transparan, cepat, dan akuntabel. Integrasi sistem informasi yang mapan menjadi pondasi utama untuk melahirkan layanan yang cepat saji dan tepercaya.",
+        content2: "Menghadapi tantangan teknologi ke depan, kami telah memetakan beberapa langkah strategis yang didesain secara adaptif. Penerapan standar operasional prosedur digital ini terbukti menaikkan produktivitas kerja staff serta menekan angka keluhan operasional harian. Dukungan teknologi terenkripsi tinggi juga diaplikasikan guna menjamin kerahasiaan berkas sensitif milik pemohon layanan publik.",
+        images: [
+            "https://images.unsplash.com/photo-1519389950473-47ba0277781c?auto=format&fit=crop&q=80&w=800&h=450",
+            "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&q=80&w=800&h=450",
+            "https://images.unsplash.com/photo-1531403009284-440f080d1e12?auto=format&fit=crop&q=80&w=800&h=450"
+        ],
+        bullets: {
+            check: [
+                "Mengurangi waktu verifikasi berkas pengajuan hingga 75%.",
+                "Memudahkan pemantauan progres permohonan secara real-time dan terbuka.",
+                "Menjamin keamanan data dengan enkripsi database berlapis SSL."
+            ],
+            arrow: [
+                "Melakukan audit berkala sistem IT dan data center keamanan.",
+                "Menyelenggarakan pelatihan IT khusus untuk staff pelayanan lini depan.",
+                "Mengumpulkan feedback masyarakat via survei kepuasan digital otomatis."
+            ],
+            star: [
+                "Perolehan Indeks Kepuasan Masyarakat (IKM) berskala 3.82 dari 4.00.",
+                "Sertifikat Keamanan Informasi berstandar nasional dan regional.",
+                "Penghargaan Inovator Layanan Terintegrasi Terbaik Tahun 2025."
+            ],
+            number: [
+                "Identifikasi masalah bottleneck pada pelayanan luring konvensional.",
+                "Perancangan arsitektur database terpadu satu pintu.",
+                "Uji coba lapangan (Beta testing) dan perbaikan bugs berkelanjutan.",
+                "Peluncuran sistem (Go Live) secara menyeluruh disertai panduan panduan."
+            ]
+        }
+    }
 };
 
 // Available Styles for each Page Type
@@ -214,6 +250,10 @@ const styleOptions = {
     sop: [
         { value: "flow", label: "Langkah Bagan Alur", desc: "Bagan kartu horizontal mengalir dihubungkan dengan panah penunjuk jalan." },
         { value: "tabs", label: "SOP Tabbed Diagram", desc: "Menyaring berkas SOP berdasarkan jenis dokumen menggunakan tab khusus." }
+    ],
+    artikel: [
+        { value: "modern", label: "Artikel Karosel Modern", desc: "Post artikel dengan Karosel Foto, efek zoom, bullet checkmark & star kustom." },
+        { value: "magazine", label: "Layout Majalah & Sidebar", desc: "Artikel berita dengan layout dua kolom, galeri foto melayang, dan list angka kustom." }
     ]
 };
 
@@ -347,7 +387,7 @@ function setupEventListeners() {
 
 // Show/Hide context-sensitive setting inputs
 function toggleOptionsPanel() {
-    if (state.pageType === "kontak" || state.pageType === "sop") {
+    if (state.pageType === "kontak" || state.pageType === "sop" || state.pageType === "artikel") {
         photoStyleGroup.style.display = "none";
     } else {
         photoStyleGroup.style.display = "block";
@@ -375,6 +415,7 @@ function renderStyleOptions() {
         else if (state.pageType === "galeri") emoji = idx === 0 ? "🖼️" : "🏷️";
         else if (state.pageType === "prestasi") emoji = idx === 0 ? "🏆" : "📈";
         else if (state.pageType === "sop") emoji = idx === 0 ? "🔀" : "📂";
+        else if (state.pageType === "artikel") emoji = idx === 0 ? "📝" : "📖";
         
         button.innerHTML = `
             <div class="icon">${emoji}</div>
@@ -419,6 +460,10 @@ function updateInfoText() {
         case "sop":
             title = "Bagan Alur & SOP Kerja Page Builder";
             text = "Menampilkan Standar Operasional Prosedur (SOP) secara visual. Rincian penanggungjawab (PIC) dan jangka waktu (SLA) disertakan pada setiap bagan.";
+            break;
+        case "artikel":
+            title = "Posting Artikel & Blog Page Builder";
+            text = "Menghasilkan posting artikel modern dengan Karosel Gambar responsif, efek zoom/hover foto, dan berbagai variasi bullet kustom (check, star, numbers) tanpa plugin.";
             break;
     }
     infoBoxText.innerHTML = text;
@@ -489,6 +534,7 @@ function getPageHeaderTitle() {
         case "galeri": return "Galeri Dokumentasi Kegiatan";
         case "prestasi": return "Penghargaan & Prestasi Kerja";
         case "sop": return "Bagan Alur Prosedur Kerja (SOP)";
+        case "artikel": return "Publikasi Artikel & Opini";
     }
 }
 
@@ -1108,29 +1154,22 @@ function wpgalNext() {
 }
 
 function wpgalFilter(category) {
-    // Update filter buttons active state
     document.querySelectorAll('.wpgal-filter-btn').forEach(btn => btn.classList.remove('active'));
     event.currentTarget.classList.add('active');
 
-    // Filter cards
     const cards = document.querySelectorAll('.wpgal-card');
-    let filteredIds = [];
-    
     cards.forEach(card => {
         const cat = card.dataset.category;
         if(category === 'all' || cat === category) {
             card.style.display = 'inline-block';
-            filteredIds.push(card.querySelector('.wpgal-img').src);
         } else {
-            card.style.style.display = 'none';
+            card.style.display = 'none';
         }
     });
 
-    // Rebuild active database list for navigation
     wpgalActiveIds = wpgalDb.filter(x => category === 'all' || x.category === category).map(x => x.id);
 }
 
-// Close on clicking outside lightbox image
 document.addEventListener('DOMContentLoaded', function() {
     const lb = document.getElementById('wpgal-lightbox-modal');
     if(lb) {
@@ -1284,7 +1323,6 @@ document.addEventListener('DOMContentLoaded', function() {
 .wpsop-meta-badge { background: #f1f5f9; color: #475569; font-size: 0.72rem; font-weight: 600; padding: 3px 8px; border-radius: 4px; display: flex; align-items: center; gap: 4px; }
 .wpsop-meta-badge::before { content: '•'; color: ${primary}; font-weight: bold; }
 
-/* Arrows on Desktop */
 @media (min-width: 768px) {
     .wpsop-step-card:not(:last-child)::after { content: '↓'; position: absolute; bottom: -18px; left: 32px; font-size: 1.2rem; font-weight: bold; color: #cbd5e1; }
 }
@@ -1362,6 +1400,236 @@ function wpsopTab(e, id) {
 }
 </script>
 `;
+        }
+
+        generatedHTML = `${styles}\n${bodyHTML}\n${inlineJS}`;
+    }
+
+    // ----------------------------------------------------
+    // TYPE: POSTING ARTIKEL & BLOG
+    // ----------------------------------------------------
+    else if (s.pageType === "artikel") {
+        const art = database.artikel;
+        const styles = `
+<style>
+.wpart-wrapper { font-family: ${font}; color: #1e293b; margin: 20px 0; line-height: 1.6; }
+.wpart-meta { display: flex; gap: 12px; align-items: center; color: #64748b; font-size: 0.85rem; margin-bottom: 20px; border-bottom: 1px solid #e2e8f0; padding-bottom: 12px; }
+.wpart-badge { background-color: ${primary}15; color: ${primary}; font-weight: 700; font-size: 0.72rem; padding: 2px 8px; border-radius: 4px; text-transform: uppercase; }
+
+/* Image Effects */
+.wpart-img-zoom-box { overflow: hidden; border-radius: ${radius}px; border: 1px solid #e2e8f0; margin: 20px 0; box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.wpart-img-zoom { width: 100%; height: auto; display: block; transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+.wpart-img-zoom-box:hover .wpart-img-zoom { transform: scale(1.05); }
+
+.wpart-img-float-box { transition: all 0.3s ease; border-radius: ${radius}px; overflow: hidden; margin: 20px 0; border: 1px solid #e2e8f0; }
+.wpart-img-float-box:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.12); }
+.wpart-img-float { width: 100%; height: auto; display: block; }
+
+/* Carousel Slider */
+.wpart-carousel { position: relative; width: 100%; height: 380px; overflow: hidden; border-radius: ${radius}px; margin-bottom: 25px; box-shadow: 0 10px 25px rgba(0,0,0,0.05); }
+.wpart-slides { width: 100%; height: 100%; position: relative; }
+.wpart-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.5s ease; z-index: 1; }
+.wpart-slide.active { opacity: 1; z-index: 2; }
+.wpart-slide img { width: 100%; height: 100%; object-fit: cover; }
+.wpart-slide-caption { position: absolute; bottom: 0; left: 0; width: 100%; background: linear-gradient(transparent, rgba(0,0,0,0.7)); padding: 25px 20px 15px 20px; color: white; box-sizing: border-box; z-index: 3; }
+.wpart-slide-caption p { margin: 0; font-size: 0.9rem; font-weight: 600; text-shadow: 1px 1px 3px rgba(0,0,0,0.5); }
+.wpart-car-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255,255,255,0.7); color: #0f172a; border: none; width: 36px; height: 36px; font-size: 1.3rem; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; z-index: 10; transition: background 0.2s; }
+.wpart-car-btn:hover { background: #ffffff; color: ${primary}; }
+.wpart-car-prev { left: 16px; }
+.wpart-car-next { right: 16px; }
+.wpart-car-dots { position: absolute; bottom: 15px; left: 50%; transform: translateX(-50%); display: flex; gap: 8px; z-index: 10; }
+.wpart-car-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,0.4); cursor: pointer; transition: all 0.3s; }
+.wpart-car-dot.active { background: white; width: 20px; border-radius: 4px; }
+
+/* Custom Bullet Styles */
+.wpart-list-check { list-style: none; padding-left: 0; margin: 15px 0; }
+.wpart-list-check li { position: relative; padding-left: 28px; margin-bottom: 10px; font-size: 0.9rem; color: #334155; }
+.wpart-list-check li::before { content: '✓'; position: absolute; left: 0; top: 1px; color: var(--success-color); font-weight: 900; font-size: 1.05rem; }
+
+.wpart-list-arrow { list-style: none; padding-left: 0; margin: 15px 0; }
+.wpart-list-arrow li { position: relative; padding-left: 28px; margin-bottom: 10px; font-size: 0.9rem; color: #334155; }
+.wpart-list-arrow li::before { content: '➔'; position: absolute; left: 0; top: 1px; color: ${primary}; font-size: 0.85rem; }
+
+.wpart-list-star { list-style: none; padding-left: 0; margin: 15px 0; }
+.wpart-list-star li { position: relative; padding-left: 28px; margin-bottom: 10px; font-size: 0.9rem; color: #334155; }
+.wpart-list-star li::before { content: '★'; position: absolute; left: 0; top: 0; color: #eab308; font-size: 1rem; }
+
+.wpart-list-num { list-style: none; padding-left: 0; margin: 20px 0; counter-reset: wpart-counter; }
+.wpart-list-num li { position: relative; padding-left: 36px; margin-bottom: 14px; font-size: 0.9rem; color: #334155; }
+.wpart-list-num li::before { counter-increment: wpart-counter; content: counter(wpart-counter); position: absolute; left: 0; top: 1px; width: 22px; height: 22px; background-color: ${primary}; color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: bold; }
+
+/* Sub-sections */
+.wpart-subheading { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 25px 0 12px 0; display: flex; align-items: center; gap: 8px; }
+.wpart-subheading::before { content: ''; display: inline-block; width: 4px; height: 18px; background-color: ${primary}; border-radius: 2px; }
+
+/* Typography */
+.wpart-dropcap::first-letter { font-size: 3.5rem; font-weight: 800; float: left; margin-top: 4px; margin-right: 8px; color: ${primary}; line-height: 0.8; }
+.wpart-quote { border-left: 4px solid ${primary}; padding: 10px 20px; margin: 20px 0; background-color: #f8fafc; font-style: italic; color: #475569; font-size: 0.95rem; border-radius: 0 ${radius}px ${radius}px 0; }
+
+/* Two-column layout */
+.wpart-grid { display: flex; gap: 30px; flex-wrap: wrap; margin-top: 20px; }
+.wpart-main-col { flex: 2; min-width: 350px; }
+.wpart-side-col { flex: 0.9; min-width: 250px; background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: ${radius}px; padding: 20px; height: fit-content; }
+.wpart-widget-title { font-size: 0.95rem; font-weight: 700; color: #0f172a; border-bottom: 2px solid ${primary}; padding-bottom: 6px; margin: 0 0 15px 0; text-transform: uppercase; letter-spacing: 0.05em; }
+.wpart-widget-body { font-size: 0.8rem; color: #475569; }
+.wpart-author-card { display: flex; align-items: center; gap: 12px; margin-bottom: 15px; }
+.wpart-author-img { width: 44px; height: 44px; border-radius: 50%; object-fit: cover; border: 2px solid #ffffff; box-shadow: 0 2px 6px rgba(0,0,0,0.1); }
+</style>
+`;
+
+        let bodyHTML = "";
+        let inlineJS = "";
+
+        if (s.template === "modern") {
+            bodyHTML = `
+            <div class="wpart-wrapper">
+                <div class="wpart-meta">
+                    <span class="wpart-badge">${art.category}</span>
+                    <span>Oleh: <strong>${art.author}</strong></span>
+                    <span>•</span>
+                    <span>${art.date}</span>
+                </div>
+
+                <!-- 1. Efek Gambar: Carousel Slider -->
+                <div class="wpart-carousel">
+                    <div class="wpart-slides">
+                        <div class="wpart-slide active">
+                            <img src="${art.images[0]}" alt="Slide 1">
+                            <div class="wpart-slide-caption"><p>Rapat Koordinasi Penerapan Sistem Pelayanan Terintegrasi Baru</p></div>
+                        </div>
+                        <div class="wpart-slide">
+                            <img src="${art.images[1]}" alt="Slide 2">
+                            <div class="wpart-slide-caption"><p>Infrastruktur Server Cloud Terenkripsi untuk Proteksi Data Publik</p></div>
+                        </div>
+                        <div class="wpart-slide">
+                            <img src="${art.images[2]}" alt="Slide 3">
+                            <div class="wpart-slide-caption"><p>Monitoring Dashboard Evaluasi Kinerja Publik Secara Real-time</p></div>
+                        </div>
+                    </div>
+                    <button class="wpart-car-btn wpart-car-prev" onclick="wpartPrevSlide()">‹</button>
+                    <button class="wpart-car-btn wpart-car-next" onclick="wpartNextSlide()">›</button>
+                    <div class="wpart-car-dots">
+                        <span class="wpart-car-dot active" onclick="wpartSetSlide(0)"></span>
+                        <span class="wpart-car-dot" onclick="wpartSetSlide(1)"></span>
+                        <span class="wpart-car-dot" onclick="wpartSetSlide(2)"></span>
+                    </div>
+                </div>
+
+                <p class="wpart-dropcap">${art.content1}</p>
+                
+                <blockquote class="wpart-quote">
+                    "Efisiensi sistem bukan diukur dari seberapa banyak aplikasi digital yang kita miliki, melainkan seberapa cepat masyarakat bisa menyelesaikan kepentingannya dengan andal."
+                </blockquote>
+
+                <!-- 2. Efek Gambar: Zoom on Hover -->
+                <h4 class="wpart-subheading">Akselerasi Pengolahan Data Layanan</h4>
+                <p>Untuk mengimbangi lonjakan data, optimalisasi infrastruktur terus dilakukan secara berkala. Gambar di bawah menunjukkan penataan infrastruktur yang scalable:</p>
+                <div class="wpart-img-zoom-box">
+                    <img class="wpart-img-zoom" src="${art.images[2]}" alt="Zoom Image">
+                </div>
+
+                <!-- 3. Variasi Bullets: Checkmark, Star, Arrow -->
+                <h4 class="wpart-subheading">Indikator Keberhasilan Digitalisasi Pelayanan</h4>
+                <p>Dalam kurun waktu evaluasi triwulan terakhir, unit kerja mencatat beberapa pencapaian terukur:</p>
+                <ul class="wpart-list-check">
+                    ${art.bullets.check.map(x => `<li>${x}</li>`).join("")}
+                </ul>
+
+                <h4 class="wpart-subheading">Langkah Penerapan SOP di Lapangan</h4>
+                <p>Metode transisi birokrasi dilakukan secara terstruktur melalui alur taktis berikut:</p>
+                <ul class="wpart-list-arrow">
+                    ${art.bullets.arrow.map(x => `<li>${x}</li>`).join("")}
+                </ul>
+
+                <h4 class="wpart-subheading">Penghargaan Nasional yang Diraih</h4>
+                <p>Konsistensi pengembangan membuahkan hasil positif yang diakui secara nasional:</p>
+                <ul class="wpart-list-star">
+                    ${art.bullets.star.map(x => `<li>${x}</li>`).join("")}
+                </ul>
+            </div>
+            `;
+
+            inlineJS = `
+<script>
+let wpartIdx = 0;
+function wpartShowSlide(n) {
+    const slides = document.querySelectorAll('.wpart-slide');
+    const dots = document.querySelectorAll('.wpart-car-dot');
+    if(!slides.length) return;
+    if(n >= slides.length) wpartIdx = 0;
+    if(n < 0) wpartIdx = slides.length - 1;
+    slides.forEach(s => s.classList.remove('active'));
+    dots.forEach(d => d.classList.remove('active'));
+    slides[wpartIdx].classList.add('active');
+    dots[wpartIdx].classList.add('active');
+}
+function wpartNextSlide() { wpartIdx++; wpartShowSlide(wpartIdx); }
+function wpartPrevSlide() { wpartIdx--; wpartShowSlide(wpartIdx); }
+function wpartSetSlide(n) { wpartIdx = n; wpartShowSlide(wpartIdx); }
+
+// Auto play carousel
+document.addEventListener('DOMContentLoaded', function() {
+    setInterval(wpartNextSlide, 6000);
+});
+</script>
+`;
+        } else if (s.template === "magazine") {
+            bodyHTML = `
+            <div class="wpart-wrapper">
+                <div class="wpart-meta">
+                    <span class="wpart-badge" style="background-color:#05966915; color:#059669;">BERITA UTAMA</span>
+                    <span>Diunggah: ${art.date}</span>
+                </div>
+
+                <div class="wpart-grid">
+                    <div class="wpart-main-col">
+                        <p class="wpart-dropcap">${art.content1}</p>
+
+                        <!-- Efek Gambar: Float Up & Soft Shadow on Hover -->
+                        <div class="wpart-img-float-box">
+                            <img class="wpart-img-float" src="${art.images[1]}" alt="Float Image">
+                        </div>
+
+                        <p>${art.content2}</p>
+
+                        <!-- Variasi Bullet: Number Badges -->
+                        <h4 class="wpart-subheading">Tahapan Implementasi Sistem Digital</h4>
+                        <ol class="wpart-list-num">
+                            ${art.bullets.number.map(x => `<li>${x}</li>`).join("")}
+                        </ol>
+                    </div>
+
+                    <!-- Sidebar Column -->
+                    <div class="wpart-side-col">
+                        <h4 class="wpart-widget-title">Profil Penulis</h4>
+                        <div class="wpart-author-card">
+                            <img class="wpart-author-img" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=128&h=128" alt="Author">
+                            <div>
+                                <strong style="font-size:0.85rem; color:#0f172a; display:block;">Ir. Diana Novita, M.T.</strong>
+                                <span style="font-size:0.7rem; color:#64748b;">Praktisi Layanan & Kepala Subdit</span>
+                            </div>
+                        </div>
+                        <p style="font-size:0.75rem; color:#475569; line-height:1.5; margin-bottom: 20px;">Berfokus pada pengembangan integrasi data center instansi pemerintah serta reformasi alur layanan publik.</p>
+
+                        <h4 class="wpart-widget-title">Statistik Layanan</h4>
+                        <div class="wpart-widget-body">
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span>Efisiensi Waktu</span>
+                                <strong>75%</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
+                                <span>Indeks Kepuasan</span>
+                                <strong>3.82 / 4.00</strong>
+                            </div>
+                            <div style="display:flex; justify-content:space-between;">
+                                <span>User Aktif Harian</span>
+                                <strong>2,400+ User</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
         }
 
         generatedHTML = `${styles}\n${bodyHTML}\n${inlineJS}`;

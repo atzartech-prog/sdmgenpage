@@ -14,7 +14,7 @@ Seluruh source code aplikasi web disimpan dalam folder project di HP Anda:
 
 ---
 
-## 🚀 Cara Menjalankan Aplikasi Web Generator
+## 🚀 Cara Menjalankan Halaman Generator
 
 Server lokal secara otomatis telah dijalankan di HP Anda pada port **8080** menggunakan Python.
 
@@ -29,7 +29,7 @@ Server lokal secara otomatis telah dijalankan di HP Anda pada port **8080** meng
 
 ## 🛠️ Jenis Halaman & Opsi Tampilan yang Disediakan
 
-Aplikasi generator ini mendukung pembuatan 5 jenis halaman dengan beberapa opsi tampilan:
+Aplikasi generator ini mendukung pembuatan 6 jenis halaman dengan beberapa opsi tampilan:
 
 ### 1. 👥 Halaman Profil & Struktur Organisasi SDM
 Menyajikan bagan kepengurusan mulai dari Direktur Utama, Sekretaris, 3 Kepala Subdirektorat, hingga 17 Staff teknis.
@@ -49,7 +49,7 @@ Menampilkan dokumentasi kegiatan atau aset penting dengan pembesar gambar (light
 
 ### 4. 🏆 Halaman Penghargaan & Prestasi
 Memamerkan sertifikat penghargaan yang diraih oleh unit kerja.
-* **Opsi 1: Grid Sertifikat + Zoom** (Grid kartu penghargaan dilengkapi badge tahun dan instansi pemberi. Sertifikat dapat diklik untuk dizoom).
+* **Opsi 1: Grid Sertifikat + Zoom** (Grid kartu penghargaan dilengkapi badge tahun dan instansi pemberi. Sertifikat dapat diklik untuk diperbesar (*modal zoom*)).
 * **Opsi 2: Linimasa (Timeline) Prestasi** (Perjalanan pencapaian disusun secara vertikal berurutan berdasarkan tahun pencapaian).
 
 ### 5. 📋 Halaman Bagan Alur SOP Kerja
@@ -57,13 +57,24 @@ Menjelaskan Standar Operasional Prosedur (SOP) internal secara terstruktur untuk
 * **Opsi 1: Langkah Bagan Alur** (Bagan proses beruntun dari atas ke bawah lengkap dengan rincian PIC dan batas waktu pengerjaan (SLA)).
 * **Opsi 2: SOP Tabbed Diagram** (Filter berbagai dokumen SOP menggunakan tab di bagian atas untuk navigasi cepat).
 
+### 6. ✍️ Halaman Posting Artikel & Blog (Baru!)
+Mempublikasikan artikel berita atau opini instansi dengan elemen visual dinamis.
+* **Opsi 1: Artikel Karosel Modern**:
+  * **Efek Gambar**: Karosel foto responsif dengan navigasi Prev/Next & Dots indikator, serta efek zoom-in saat gambar di-hover.
+  * **Variasi Bullets**: Menggunakan 3 gaya list kustom: Centang Hijau (`✓` checkmark), Bintang Emas (`★` star), dan Panah Aksen (`➔` arrow).
+  * **Tipografi**: Efek Drop Cap (huruf pertama paragraf besar) dan Quote Box beraksen elegan.
+* **Opsi 2: Layout Majalah & Sidebar**:
+  * **Efek Gambar**: Foto melayang (*Float Up*) dengan bayangan tebal dinamis saat kursor di-hover.
+  * **Variasi Bullets**: List angka kustom dengan lencana bulat berwarna aksen.
+  * **Struktur**: Layout dua kolom (Kolom Artikel Utama di kiri, Widget Sidebar Informasi Penulis & Statistik di kanan).
+
 ---
 
 ## 🎨 Parameter Kustomisasi Tema (Sidebar Kiri)
 Sebelum menyalin kode, Anda dapat mengatur:
 1. **Warna Utama**: Ubah warna tema (aksen tombol, border, badge, hover, dll) agar selaras dengan branding instansi.
 2. **Kelengkungan Sudut (Radius)**: Mengatur kebulatan sudut kartu atau bingkai foto.
-3. **Font Tampilan**: Pilih font profesional (Plus Jakarta Sans, Outfit, Inter) atau biarkan mengikuti font bawaan website WordPress Anda.
+3. **Font Tampilan**: Pilih font profesional (Plus Jakarta Sans, Outfit, Inter) atau biarkan mengikuti font default bawaan website WordPress Anda.
 4. **Bentuk Bingkai**: Khusus untuk foto profil staf dan sertifikat, Anda bisa memilih bentuk Kotak Presisi, Kotak Tumpul, atau Bulat.
 
 ---
