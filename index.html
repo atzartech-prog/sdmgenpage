@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>WordPress Custom Page Generator - Multi Page Kit</title>
+    <title>WP SDM Profile Page Generator</title>
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -15,89 +15,87 @@
         <!-- Sidebar / Control Panel -->
         <aside class="sidebar">
             <div class="brand">
-                <div class="logo">WP</div>
+                <div class="logo">SDM</div>
                 <div>
-                    <h1>WP Custom Page</h1>
-                    <p>Generator Halaman Mandiri</p>
+                    <h1>WP Profile Gen</h1>
+                    <p>Generator Halaman Profil Staf</p>
                 </div>
             </div>
 
-            <div class="section-title">1. Pilih Jenis Halaman</div>
-            <div class="control-group">
-                <select id="page-type" class="page-type-select">
-                    <option value="sdm" selected>👥 Profil Struktur & SDM</option>
-                    <option value="kontak">📞 Kontak Hubungi Kami</option>
-                    <option value="galeri">🖼️ Galeri Foto Instansi</option>
-                    <option value="prestasi">🏆 Penghargaan & Prestasi</option>
-                    <option value="sop">📋 Bagan Alur & SOP Kerja</option>
-                    <option value="artikel">✍️ Posting Artikel & Blog</option>
-                </select>
-            </div>
+            <div class="sidebar-section">
+                <div class="section-title">🎨 Kustomisasi Tema</div>
+                
+                <div class="settings-group">
+                    <!-- Accent Color -->
+                    <div class="control-group">
+                        <label for="primary-color">Warna Utama (Aksen)</label>
+                        <div class="color-presets">
+                            <button class="preset-btn active" data-color="#1e40af" style="background-color: #1e40af;" title="Corporate Blue"></button>
+                            <button class="preset-btn" data-color="#065f46" style="background-color: #065f46;" title="Forest Green"></button>
+                            <button class="preset-btn" data-color="#800020" style="background-color: #800020;" title="Burgundy"></button>
+                            <button class="preset-btn" data-color="#581c87" style="background-color: #581c87;" title="Royal Purple"></button>
+                            <button class="preset-btn" data-color="#b45309" style="background-color: #b45309;" title="Warm Amber"></button>
+                        </div>
+                        <div class="color-picker-wrapper">
+                            <input type="color" id="primary-color" value="#1e40af">
+                            <input type="text" id="primary-color-text" value="#1e40af" placeholder="#1e40af">
+                        </div>
+                    </div>
 
-            <div class="section-title">2. Pilih Opsi Tampilan</div>
-            <div class="template-selector" id="style-selector-container">
-                <!-- Dynamically filled with template styles based on page type -->
-            </div>
+                    <!-- Border Radius -->
+                    <div class="control-group">
+                        <label for="card-radius">Kelengkungan Sudut (Radius)</label>
+                        <div class="range-wrapper">
+                            <input type="range" id="card-radius" min="0" max="24" value="12" step="2">
+                            <span id="card-radius-value">12px</span>
+                        </div>
+                    </div>
 
-            <div class="section-title">3. Kustomisasi Tema</div>
-            <div class="settings-group">
-                <div class="control-group">
-                    <label for="primary-color">Warna Utama (Aksen)</label>
-                    <div class="color-picker-wrapper">
-                        <input type="color" id="primary-color" value="#3b82f6">
-                        <input type="text" id="primary-color-text" value="#3b82f6" placeholder="#3b82f6">
+                    <!-- Font Selection -->
+                    <div class="control-group">
+                        <label for="font-family">Font Halaman</label>
+                        <select id="font-family">
+                            <option value="inherit" selected>Font Bawaan WordPress</option>
+                            <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
+                            <option value="'Outfit', sans-serif">Outfit</option>
+                            <option value="'Inter', sans-serif">Inter</option>
+                            <option value="'Segoe UI', system-ui, sans-serif">System UI</option>
+                        </select>
+                    </div>
+
+                    <!-- Photo Shape -->
+                    <div class="control-group">
+                        <label for="photo-style">Bingkai Foto Profil</label>
+                        <select id="photo-style">
+                            <option value="rounded" selected>Kotak Tumpul (Rounded)</option>
+                            <option value="circle">Bulat (Lingkaran)</option>
+                            <option value="square">Kotak Presisi (Square)</option>
+                        </select>
                     </div>
                 </div>
-
-                <div class="control-group" id="radius-control-group">
-                    <label for="card-radius">Kelengkungan Sudut (Radius)</label>
-                    <div class="range-wrapper">
-                        <input type="range" id="card-radius" min="0" max="24" value="12" step="2">
-                        <span id="card-radius-value">12px</span>
-                    </div>
-                </div>
-
-                <div class="control-group">
-                    <label for="font-family">Font Tampilan</label>
-                    <select id="font-family">
-                        <option value="inherit">Font Bawaan WordPress</option>
-                        <option value="'Plus Jakarta Sans', sans-serif">Plus Jakarta Sans</option>
-                        <option value="'Outfit', sans-serif">Outfit</option>
-                        <option value="'Inter', sans-serif">Inter</option>
-                        <option value="'Roboto', sans-serif">Roboto</option>
-                    </select>
-                </div>
-
-                <div class="control-group" id="photo-style-group">
-                    <label for="photo-style">Bentuk Bingkai Foto/Sertifikat</label>
-                    <select id="photo-style">
-                        <option value="square">Kotak Presisi</option>
-                        <option value="rounded" selected>Kotak Tumpul (Rounded)</option>
-                        <option value="circle">Bulat (Lingkaran)</option>
-                    </select>
-                </div>
             </div>
 
-            <div class="section-title">4. Informasi & Konten Halaman</div>
-            <div class="data-info-box">
-                <div class="info-icon">💡</div>
-                <div class="info-text" id="info-box-text">
-                    Data default telah disiapkan dengan standar profesional. Semua CSS dan JavaScript dibundel tanpa memerlukan plugin tambahan.
-                </div>
+            <div class="sidebar-section" style="margin-top: 20px;">
+                <div class="section-title">⚙️ Aksi Halaman</div>
+                <button class="action-btn outline" id="btn-reset-data">
+                    <span class="icon">🔄</span> Reset ke Data Default
+                </button>
             </div>
             
             <div class="sidebar-footer">
-                <p>Tanpa Plugin • HTML & CSS Murni • SEO Friendly</p>
+                <p>Generator Halaman Profil WP v2.0</p>
+                <p style="margin-top: 4px; font-size: 0.65rem; opacity: 0.7;">Responsive • No Plugins • SEO Optimized</p>
             </div>
         </aside>
 
         <!-- Main Work Area -->
         <main class="main-content">
             <header class="app-header">
-                <h2 id="page-title-display">WordPress Custom HTML Page Builder</h2>
+                <h2>Profil & Struktur Organisasi SDM</h2>
                 <div class="tabs-header">
-                    <button class="tab-trigger active" data-tab="preview">👁️ Pratinjau Tampilan (Preview)</button>
-                    <button class="tab-trigger" data-tab="code">💻 Kode Siap Paste (HTML/CSS/JS)</button>
+                    <button class="tab-trigger active" data-tab="preview">👁️ Pratinjau Tampilan</button>
+                    <button class="tab-trigger" data-tab="crud">👥 Kelola Data Personel</button>
+                    <button class="tab-trigger" data-tab="code">💻 Kode Siap Paste</button>
                 </div>
             </header>
 
@@ -105,11 +103,11 @@
                 <!-- Preview Tab -->
                 <div class="tab-content active" id="tab-preview">
                     <div class="preview-toolbar">
-                        <span class="preview-badge">Preview Mode (Simulasi Halaman WordPress)</span>
+                        <span class="preview-badge">Pratinjau Halaman Aktif</span>
                         <div class="responsive-toggles">
-                            <button class="resp-btn active" data-width="100%">🖥️ Desktop</button>
-                            <button class="resp-btn" data-width="768px">📱 Tablet</button>
-                            <button class="resp-btn" data-width="375px">📱 Mobile</button>
+                            <button class="resp-btn active" data-width="100%">Desktop</button>
+                            <button class="resp-btn" data-width="768px">Tablet</button>
+                            <button class="resp-btn" data-width="480px">Mobile</button>
                         </div>
                     </div>
                     <div class="preview-wrapper">
@@ -117,12 +115,37 @@
                     </div>
                 </div>
 
+                <!-- CRUD Tab -->
+                <div class="tab-content" id="tab-crud">
+                    <div class="crud-toolbar">
+                        <div class="search-box">
+                            <span class="search-icon">🔍</span>
+                            <input type="text" id="crud-search" placeholder="Cari nama, NIP, atau jabatan...">
+                        </div>
+                        <button class="action-btn primary" id="btn-add-personnel">
+                            <span class="btn-icon">＋</span> Tambah Personel
+                        </button>
+                    </div>
+
+                    <div class="crud-container">
+                        <div class="personnel-list-header">
+                            <div class="col-info">Personel</div>
+                            <div class="col-subdit">Subdirektorat</div>
+                            <div class="col-order">Urutan</div>
+                            <div class="col-actions">Aksi</div>
+                        </div>
+                        <div class="personnel-list" id="personnel-list-container">
+                            <!-- Dynamic list items will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
                 <!-- Code Tab -->
                 <div class="tab-content" id="tab-code">
                     <div class="code-toolbar">
-                        <span class="code-badge">Salin kode di bawah ini lalu tempel ke blok "Custom HTML" di WordPress</span>
+                        <span class="code-badge">Salin kode HTML/CSS/JS di bawah ini lalu tempel ke Custom HTML di WordPress</span>
                         <button class="copy-btn" id="copy-code-btn">
-                            <span class="copy-icon">📋</span> Salin Kode
+                            <span class="copy-icon">📋</span> Salin Kode HTML
                         </button>
                     </div>
                     <div class="code-container">
@@ -133,9 +156,9 @@
                         <h3>💡 Cara Memasang di WordPress (Tanpa Plugin):</h3>
                         <ol>
                             <li>Buka halaman edit WordPress (Gutenberg Editor atau Classic Editor).</li>
-                            <li>Jika menggunakan Gutenberg (Blok): Klik tombol <strong>+ (Tambah Blok)</strong>, cari dan pilih blok <strong>HTML Khusus (Custom HTML)</strong>.</li>
-                            <li>Jika menggunakan Classic Editor: Pindah dari mode visual ke mode <strong>Teks (HTML)</strong>.</li>
-                            <li>Tempel (Paste) kode yang disalin di atas ke dalam blok/area teks tersebut.</li>
+                            <li>Jika menggunakan <strong>Gutenberg (Block Editor)</strong>: Klik tombol <strong>+</strong>, cari dan pilih blok <strong>HTML Khusus (Custom HTML)</strong>.</li>
+                            <li>Jika menggunakan <strong>Classic Editor</strong>: Pindah dari mode visual ke mode <strong>Teks (HTML)</strong>.</li>
+                            <li>Tempel (Paste) kode yang sudah disalin di atas ke dalam blok/area teks tersebut.</li>
                             <li>Klik <strong>Simpan Draf</strong> atau <strong>Perbarui</strong>, lalu lihat halaman tersebut. Selesai!</li>
                         </ol>
                     </div>
@@ -143,7 +166,74 @@
             </div>
         </main>
     </div>
-    
+
+    <!-- Modal Form (Add/Edit Personnel) -->
+    <div class="modal-backdrop" id="personnel-modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h3 id="modal-title">Edit Data Personel</h3>
+                <button class="close-modal-btn" id="btn-close-modal">✕</button>
+            </div>
+            <form id="personnel-form">
+                <input type="hidden" id="field-id">
+                
+                <div class="form-grid">
+                    <div class="form-group col-span-2">
+                        <label for="field-name">Nama Lengkap & Gelar <span class="required">*</span></label>
+                        <input type="text" id="field-name" required placeholder="Contoh: Drs. H. M. Yusuf, M.Si.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="field-nip">NIP <span class="required">*</span></label>
+                        <input type="text" id="field-nip" required placeholder="Contoh: 19670814 199303 1 002">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field-position">Jabatan <span class="required">*</span></label>
+                        <input type="text" id="field-position" required placeholder="Contoh: Staf Analisis Data">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field-subdit">Subdirektorat / Bagian <span class="required">*</span></label>
+                        <select id="field-subdit" required>
+                            <option value="Direksi">Direksi (Direktur & Sekretaris)</option>
+                            <option value="Subdirektorat Optimalisasi">Subdirektorat Optimalisasi</option>
+                            <option value="Subdirektorat Keuangan">Subdirektorat Keuangan</option>
+                            <option value="Subdirektorat Evaluasi">Subdirektorat Evaluasi</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="field-photo">URL Foto Personel</label>
+                        <input type="text" id="field-photo" placeholder="Contoh: foto_web/1.jpg">
+                        <small class="help-text">Gunakan <code>foto_web/nomor.jpg</code> atau URL gambar lengkap.</small>
+                    </div>
+
+                    <div class="form-group col-span-2">
+                        <label for="field-edu">Pendidikan Formal <span class="help-text">(Satu item per baris)</span></label>
+                        <textarea id="field-edu" rows="3" placeholder="S1 Teknik Industri - Universitas Indonesia&#10;S2 Magister Sains Manajemen - UGM"></textarea>
+                    </div>
+
+                    <div class="form-group col-span-2">
+                        <label for="field-training">Diklat / Seminar / Workshop <span class="help-text">(Satu item per baris)</span></label>
+                        <textarea id="field-training" rows="3" placeholder="Diklat Kepemimpinan Administrator (PIM III)&#10;Workshop Strategic Leadership"></textarea>
+                    </div>
+
+                    <div class="form-group col-span-2">
+                        <label for="field-cert">Sertifikasi Kompetensi <span class="help-text">(Satu item per baris)</span></label>
+                        <textarea id="field-cert" rows="3" placeholder="Project Management Professional (PMP)&#10;Certified Management Specialist"></textarea>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="action-btn outline" id="btn-cancel-modal">Batal</button>
+                    <button type="submit" class="action-btn primary" id="btn-save-personnel">Simpan Data</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- App Logic Script -->
     <script src="app.js"></script>
 </body>
 </html>

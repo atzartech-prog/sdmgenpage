@@ -1,97 +1,93 @@
-# WordPress Custom HTML Page Generator Kit
+# 👥 WordPress SDM Profile Page Generator
 
-Kit ini berisi aplikasi web generator interaktif untuk membuat kode HTML, CSS, dan JavaScript siap pakai (copy-paste) pada halaman kustom WordPress **tanpa membutuhkan plugin tambahan**. Semua kode yang dihasilkan bersifat mandiri (*self-contained*) dan dioptimalkan agar tidak bentrok dengan tema WordPress bawaan.
+Aplikasi web generator interaktif berbasis HTML, CSS, dan JavaScript untuk membuat halaman **Struktur Organisasi & Profil SDM** (Sumber Daya Manusia) yang siap dipasang (copy-paste) pada halaman kustom **WordPress** tanpa memerlukan plugin tambahan.
+
+Aplikasi ini menghasilkan kode gabungan HTML, CSS, dan JavaScript yang bersifat mandiri (*self-contained*), terisolasi (*scoped CSS*), dan dioptimalkan agar tidak bentrok dengan tema WordPress bawaan Anda.
+
+---
+
+## ✨ Fitur Utama
+
+1. **Desain Kartu Grid Modern & Akordeon**:
+   * Menampilkan profil personel dalam layout grid responsif.
+   * Setiap personel memuat data: Foto, Nama Lengkap, NIP, Jabatan, Subdirektorat, Pendidikan Formal, Diklat/Seminar/Workshop, dan Sertifikasi Kompetensi.
+   * Data detail (Pendidikan, Diklat, Sertifikasi) disusun dalam menu lipat (**Akordeon**) yang interaktif dan hemat ruang untuk masing-masing kartu staf.
+
+2. **Manajemen Data Personel (CRUD) & Urutan**:
+   * **Tambah/Edit/Hapus Data**: Kelola data staf langsung dari dashboard generator lewat form modal yang dinamis.
+   * **Pengaturan Urutan (▲/▼)**: Pindahkan urutan personel ke atas atau ke bawah secara mudah untuk menyesuaikan struktur kepemimpinan (Direktur, Sekretaris, Kasubdit, Staf).
+   * **Pencarian Real-Time**: Cari staf berdasarkan nama, NIP, atau jabatan dengan cepat.
+
+3. **LocalStorage Database**:
+   * Semua perubahan data personel dan preferensi tema otomatis disimpan di memori lokal browser (`LocalStorage`). Data Anda tetap aman meskipun browser ditutup atau halaman disegarkan (*refresh*).
+
+4. **Kustomisasi Tema Dinamis**:
+   * **Warna Utama (Aksen)**: Atur warna tombol, border aktif, dan dekorasi tema dengan color picker atau 5 warna preset korporat.
+   * **Kelengkungan Sudut (Radius)**: Sesuaikan kebulatan kartu dan tombol via slider (0px s.d 24px).
+   * **Font Halaman**: Gunakan font bawaan WordPress (*inherit*) atau pilih font profesional seperti *Plus Jakarta Sans*, *Outfit*, atau *Inter*.
+   * **Bentuk Bingkai Foto**: Pilihlah bingkai foto berbentuk **Kotak Tumpul (Rounded)**, **Bulat (Lingkaran)**, atau **Kotak Presisi (Square)**.
+
+5. **Lightbox Photo Zoom (Resolusi Penuh)**:
+   * Foto profil personel tidak dikompres. Ketika diklik, foto akan memicu modal jendela melayang (*lightbox*) dengan latar belakang blur transparan, menampilkan foto dalam ukuran besar lengkap dengan takarir (*caption*) nama dan jabatan staf.
+
+6. **Offline-Ready Fallback Avatar**:
+   * Jika berkas foto personel belum diunggah atau tidak ditemukan di server, sistem akan otomatis menghasilkan avatar vektor (SVG) yang elegan secara dinamis mengikuti warna tema yang dipilih.
 
 ---
 
 ## 📂 Struktur File Project
 
-Seluruh source code aplikasi web disimpan dalam folder project di HP Anda:
-* **Folder Utama**: [postingpagewpcustom](file:///data/data/com.termux/files/home/postingpagewpcustom)
-* **Aplikasi Web Generator**: [index.html](file:///data/data/com.termux/files/home/postingpagewpcustom/index.html)
-* **Desain UI Generator**: [style.css](file:///data/data/com.termux/files/home/postingpagewpcustom/style.css)
-* **Database & Logika Generator**: [app.js](file:///data/data/com.termux/files/home/postingpagewpcustom/app.js)
+Seluruh file source code disimpan dalam direktori project:
+* 📄 [index.html](file:///data/data/com.termux/files/home/postingpagewpcustom/index.html) — Kerangka antarmuka workspace generator dan form modal.
+* 🎨 [style.css](file:///data/data/com.termux/files/home/postingpagewpcustom/style.css) — Desain UI workspace gelap (*dark mode*) yang premium dan responsif.
+* ⚙️ [app.js](file:///data/data/com.termux/files/home/postingpagewpcustom/app.js) — Logika database LocalStorage, operasi CRUD, reordering personel, dan compiler kode WordPress.
+* 🔗 **foto_web/** — Symbolic link ke folder penyimpanan foto di memori HP Anda (`/storage/emulated/0/foto_web`).
 
 ---
 
-## 🚀 Cara Menjalankan Halaman Generator
+## 🚀 Cara Menjalankan Aplikasi
 
-Server lokal secara otomatis telah dijalankan di HP Anda pada port **8080** menggunakan Python.
+Aplikasi generator ini dapat dijalankan langsung di HP Anda melalui Termux dengan server web bawaan Python.
 
-### Cara Akses:
-1. Hubungkan HP dan Komputer ke jaringan Wi-Fi yang sama (jika ingin dibuka dari komputer/laptop).
-2. Buka web browser (Chrome, Firefox, Safari) di HP atau komputer.
-3. Masukkan alamat URL:
-   * **Akses langsung dari HP**: [http://localhost:8080](http://localhost:8080)
-   * **Akses dari komputer/laptop**: Ketahui IP lokal HP Anda (misal `192.168.1.15`), lalu buka `http://192.168.1.15:8080`
+### Langkah Menjalankan Server:
+1. Jalankan perintah server di Termux Anda:
+   ```bash
+   python3 -m http.server 8080
+   ```
+2. Buka web browser di HP Anda dan akses URL:
+   👉 **[http://localhost:8080](http://localhost:8080)**
 
----
-
-## 🛠️ Jenis Halaman & Opsi Tampilan yang Disediakan
-
-Aplikasi generator ini mendukung pembuatan 6 jenis halaman dengan beberapa opsi tampilan:
-
-### 1. 👥 Halaman Profil & Struktur Organisasi SDM
-Menyajikan bagan kepengurusan mulai dari Direktur Utama, Sekretaris, 3 Kepala Subdirektorat, hingga 17 Staff teknis.
-* **Opsi 1: Kartu Grid + Akordeon** (Pendidikan formal, non-formal, & kompetensi dalam menu lipat per personel).
-* **Opsi 2: Kartu Grid + Popup Modal** (Klik kartu staf untuk membuka detail lengkap di jendela popup melayang).
-* **Opsi 3: Navigasi Tab Subdirektorat** (Memfilter anggota berdasarkan sub-direktorat secara instan lewat tab).
-
-### 2. 📞 Halaman Kontak Hubungi Kami
-Menghubungkan pengunjung situs dengan unit kerja Anda melalui layout kontak modern.
-* **Opsi 1: Belah Dua (Split Screen)** (Detail kontak di kiri, form pesan instan dengan tombol kirim di kanan, diakhiri dengan Google Maps lebar di bawah).
-* **Opsi 2: Kartu Detail + Peta** (Tiga kartu info utama di bagian atas, Google Maps lebar di tengah, dan form pesan di bawah).
-
-### 3. 🖼️ Halaman Galeri Foto Instansi
-Menampilkan dokumentasi kegiatan atau aset penting dengan pembesar gambar (lightbox) mandiri.
-* **Opsi 1: Masonry Grid + Lightbox** (Layout dinamis ala Pinterest dengan efek zoom popup lightbox + tombol navigasi Prev/Next saat gambar diklik).
-* **Opsi 2: Filterable Grid Kategori** (Tersedia tab filter kategori seperti Kegiatan, Sosialisasi, Pelatihan, dll).
-
-### 4. 🏆 Halaman Penghargaan & Prestasi
-Memamerkan sertifikat penghargaan yang diraih oleh unit kerja.
-* **Opsi 1: Grid Sertifikat + Zoom** (Grid kartu penghargaan dilengkapi badge tahun dan instansi pemberi. Sertifikat dapat diklik untuk diperbesar (*modal zoom*)).
-* **Opsi 2: Linimasa (Timeline) Prestasi** (Perjalanan pencapaian disusun secara vertikal berurutan berdasarkan tahun pencapaian).
-
-### 5. 📋 Halaman Bagan Alur SOP Kerja
-Menjelaskan Standar Operasional Prosedur (SOP) internal secara terstruktur untuk keterbukaan publik.
-* **Opsi 1: Langkah Bagan Alur** (Bagan proses beruntun dari atas ke bawah lengkap dengan rincian PIC dan batas waktu pengerjaan (SLA)).
-* **Opsi 2: SOP Tabbed Diagram** (Filter berbagai dokumen SOP menggunakan tab di bagian atas untuk navigasi cepat).
-
-### 6. ✍️ Halaman Posting Artikel & Blog (Baru!)
-Mempublikasikan artikel berita atau opini instansi dengan elemen visual dinamis.
-* **Opsi 1: Artikel Karosel Modern**:
-  * **Efek Gambar**: Karosel foto responsif dengan navigasi Prev/Next & Dots indikator, serta efek zoom-in saat gambar di-hover.
-  * **Variasi Bullets**: Menggunakan 3 gaya list kustom: Centang Hijau (`✓` checkmark), Bintang Emas (`★` star), dan Panah Aksen (`➔` arrow).
-  * **Tipografi**: Efek Drop Cap (huruf pertama paragraf besar) dan Quote Box beraksen elegan.
-* **Opsi 2: Layout Majalah & Sidebar**:
-  * **Efek Gambar**: Foto melayang (*Float Up*) dengan bayangan tebal dinamis saat kursor di-hover.
-  * **Variasi Bullets**: List angka kustom dengan lencana bulat berwarna aksen.
-  * **Struktur**: Layout dua kolom (Kolom Artikel Utama di kiri, Widget Sidebar Informasi Penulis & Statistik di kanan).
+### Akses dari Komputer/Laptop (Satu Jaringan Wi-Fi):
+1. Cari tahu IP lokal HP Anda (misal `192.168.1.15`).
+2. Buka web browser di komputer/laptop Anda dan akses URL:
+   👉 `http://192.168.1.15:8080`
 
 ---
 
-## 🎨 Parameter Kustomisasi Tema (Sidebar Kiri)
-Sebelum menyalin kode, Anda dapat mengatur:
-1. **Warna Utama**: Ubah warna tema (aksen tombol, border, badge, hover, dll) agar selaras dengan branding instansi.
-2. **Kelengkungan Sudut (Radius)**: Mengatur kebulatan sudut kartu atau bingkai foto.
-3. **Font Tampilan**: Pilih font profesional (Plus Jakarta Sans, Outfit, Inter) atau biarkan mengikuti font default bawaan website WordPress Anda.
-4. **Bentuk Bingkai**: Khusus untuk foto profil staf dan sertifikat, Anda bisa memilih bentuk Kotak Presisi, Kotak Tumpul, atau Bulat.
+## 📷 Menghubungkan Foto Personel
+
+Aplikasi ini menggunakan rujukan relatif path folder `foto_web/[nomor].jpg` untuk foto personel default 1 s.d 20.
+
+Agar foto personel dapat tampil pada **Pratinjau Tampilan** di browser:
+1. Pastikan Anda memiliki folder bernama `foto_web` di memori internal HP Anda yang berisi file gambar bernama `1.jpg`, `2.jpg`, `3.jpg`, ..., hingga `20.jpg` (tanpa kompresi).
+2. Tautan symbolic link di Termux otomatis menghubungkan folder tersebut ke server lokal generator sehingga gambar terbaca dengan sukses.
 
 ---
 
 ## 📝 Langkah Pemasangan ke WordPress
 
-1. Buka aplikasi web generator di browser Anda.
-2. Pilih **Jenis Halaman** dan **Opsi Tampilan** yang diinginkan di panel kontrol sebelah kiri.
-3. Sesuaikan warna, radius sudut, bentuk foto, dan font sesuai selera.
-4. Klik tab **"Kode Siap Paste (HTML/CSS/JS)"** di sudut kanan atas.
-5. Klik tombol **"Salin Kode"** (Tombol akan berubah menjadi hijau "✓ Berhasil Disalin!").
-6. Masuk ke halaman admin WordPress Anda, lalu pilih **Halaman / Pages** -> **Tambah Baru**.
-7. **Jika Menggunakan Block Editor (Gutenberg)**:
-   * Klik tanda **+ (Tambah Blok)**.
+Setelah Anda selesai menyesuaikan tema dan menyusun data personel di aplikasi generator, ikuti langkah berikut untuk memasang hasilnya ke WordPress:
+
+1. Buka tab **"Kode Siap Paste"** di sudut kanan atas aplikasi generator.
+2. Klik tombol hijau **"Salin Kode HTML"** (pesan sukses "✓ Berhasil Disalin!" akan muncul).
+3. Masuk ke halaman admin/dashboard **WordPress** Anda.
+4. Buat halaman baru (**Pages -> Add New**) atau edit halaman yang sudah ada.
+5. **Jika Menggunakan Gutenberg Editor (Blok)**:
+   * Klik tombol **+** (Tambah Blok).
    * Cari dan pilih blok **HTML Khusus** (atau **Custom HTML**).
-   * Tempelkan (*paste*) kode yang disalin ke dalam blok tersebut.
-8. **Jika Menggunakan Classic Editor**:
-   * Di atas kotak penulisan, klik tab **Teks** (bukan Visual).
-   * Tempelkan (*paste*) seluruh kode di sana.
-9. Tekan **Terbitkan** atau **Perbarui**. Selesai!
+   * Tempel (*paste*) kode yang disalin ke dalam kotak input blok tersebut.
+6. **Jika Menggunakan Classic Editor**:
+   * Ubah editor dari mode **Visual** ke mode **Teks (HTML)** di sudut kanan atas kotak input.
+   * Tempel (*paste*) seluruh kode di baris paling bawah.
+7. Sebelum menerbitkan halaman, pastikan Anda telah mengunggah folder **`foto_web`** yang berisi foto-foto personel ke server website WordPress Anda (di direktori root/utama atau sesuai folder rujukan path yang Anda isi di form data personel).
+8. Klik **Terbitkan** atau **Perbarui**. Selesai! Halaman profil SDM instansi Anda sekarang aktif, responsif, dan interaktif.
